@@ -171,7 +171,7 @@ console.log("Line 156 || "+this.state.chart_intro);
 		chart_largest: this.state.chart_largest
 	};
 
-	axios.post('http://localhost:4000/charts/add', newChart)
+	axios.post('https://evening-island-40286.herokuapp.com/charts/add', newChart)
 		.then(res => console.log(res.data));
 
     this.setState({

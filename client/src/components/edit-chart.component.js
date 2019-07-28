@@ -75,7 +75,7 @@ export default class EditChart extends Component {
 	}
 	
 	componentDidMount() {
-		axios.get('http://localhost:4000/charts/'+this.props.match.params.id)
+		axios.get('https://evening-island-40286.herokuapp.com/charts/'+this.props.match.params.id)
 			.then(response => {
 				this.setState({
 					chart_headline: response.data.chart_headline,
@@ -199,7 +199,7 @@ console.log("Line 174 || "+this.state.chart_intro);
 	};
 	console.log(obj);
 	console.log("Line 183 || "+this.state.chart_datainput, this.state.chart_intro);
-	axios.post('http://localhost:4000/charts/update/'+this.props.match.params.id, obj)
+	axios.post('https://evening-island-40286.herokuapp.com/charts/update/'+this.props.match.params.id, obj)
 		.then(res => console.log(res.data));
 
 	this.props.history.push('/');	
