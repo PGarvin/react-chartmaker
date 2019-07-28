@@ -5,8 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const chartRoutes = express.Router();
 const path = require('path');
-const PORT = 4000;
-const port = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4000;
 require('dotenv').config();
 
 let Chart = require('./chart.model');
@@ -14,7 +13,6 @@ let Chart = require('./chart.model');
 app.use(cors());
 app.use(bodyParser.json());
 
-const MONGODB_URI = "mongodb+srv://pgarvin:ShowMe2018@chartmakercluster-m69dh.gcp.mongodb.net/test?retryWrites=true&w=majority";
 const LOCAL_DB = "mongodb://127.0.0.1:27017/charts"; 
 mongoose.connect(process.env.MONGODB_URI || LOCAL_DB, { useNewUrlParser: true });
 
