@@ -18,7 +18,7 @@ export default class ChartsList extends Component {
     }
     
     componentDidMount() {
-    	axios.get('http://localhost:4000/charts/')
+    	axios.get('https://evening-island-40286.herokuapp.com/charts/')
     		.then(response => {
     			this.setState({ charts: response.data });
     		})
