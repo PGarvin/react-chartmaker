@@ -1,58 +1,20 @@
 import React, { Component } from 'react';
 import domtoimage from "dom-to-image";
 import axios from 'axios';
-import { Map } from "./Map";
-import "./Chart.css";
+import { Bar, BarChart, Headline, Intro } from './bar-headline-intro';
+import { Map } from './Map';
+import './Chart.css';
 
 const condensed = require('./functions.js').condensed;
+const commaSeparateNumber = require('./functions.js').commaSeparateNumber;
 const cleanNumber = require('./functions.js').cleanNumber;
 const rowObject = require('./functions.js').rowObject;
 const makeArray = require('./functions.js').makeArray;
 const cleanArray = require('./functions.js').cleanArray;
 const percent = require('./functions.js').percent;
+const colorChange = require('./functions.js').colorChange;
 
-const Bar = ({ name, number, largest }) => {
-  return (
-    <div className="row">
-      <div className="Name">{name}</div>
-      <div
-        className="Value"
-        style={{ width: percent(number, largest, 60) + "%" }}>
-        <span style={{ opacity: 1 }}></span>
-      </div>
-      <div className="ValueNumber">{number}</div>
-    </div>
-  );
-};
 
-class BarChart extends React.Component {
-  render() {
-    const { bars, largest } = this.props;
-    return (
-      <div className="chartHolder">
-        <div className="horizontalBarChart">
-          {bars.map((bar, i) => (
-            <Bar key={i} name={bar.Name} number={bar.Value} largest={largest} />
-          ))}
-        </div>
-      </div>
-    );
-  }
-}
-
-class Headline extends React.Component {
-  render() {
-    const { headlineText } = this.props;
-    return <h2>{headlineText}</h2>;
-  }
-}
-
-class Intro extends React.Component {
-  render() {
-    const { intro } = this.props;
-    return <h4>{intro}</h4>;
-  }
-}
 
 export default class EditChart extends Component {
 	constructor(props) {
@@ -86,6 +48,7 @@ export default class EditChart extends Component {
 					chart_largest: response.data.chart_largest
 				})
 				console.log(this.state);
+				colorChange(this.state.chart_data, this.state.chart_color);
 			})
 			.catch(function (error) {
 				console.log(error);
@@ -129,24 +92,8 @@ export default class EditChart extends Component {
         return data[key];
       });
 
-      for (let i = 0; i < statesData.length; i += 1) {
-        //console.log(statesData[i].Name);
-        for (let j = 0; j < states.length; j += 1) {
-          if (
-            states[j].classList.contains(
-              condensed(statesData[i].Name).toLowerCase()
-            )
-          ) {
-            let opacity = percent(
-              statesData[i].Value,
-              Math.max.apply(Math, valueArray),
-              1
-            );
-            states[j].style.fill = `rgba(88,136,158,${opacity})`;
-            states[j].style.stroke = "rgba(88,136,158,1)";
-          }
-        }
-      }
+      colorChange(statesData, this.state.chart_color);
+
 
       this.setState({
         unusable: false,
@@ -160,9 +107,6 @@ export default class EditChart extends Component {
         states[j].style.stroke = "#AAA";
       }
 
-console.log("Line 163 || "+this.state.chart_headline);
-console.log("Line 164 || "+this.state.chart_intro);
-
       this.setState({
         unusable: true,
         chart_largest: 0,
@@ -170,8 +114,6 @@ console.log("Line 164 || "+this.state.chart_intro);
         chart_datainput: e.target.value
       });
       
-console.log("Line 173 || "+this.state.chart_headline);
-console.log("Line 174 || "+this.state.chart_intro);
 
     }
   }
@@ -237,7 +179,6 @@ console.log("Line 174 || "+this.state.chart_intro);
           <textarea
             className="form-input"
             rows="10"
-            cols="80"
             value={this.state.chart_datainput}
             onChange={this.onDataChange}
           />
@@ -254,7 +195,7 @@ console.log("Line 174 || "+this.state.chart_intro);
             {this.state.unusable ? (
               <div></div>
             ) : (
-              <button className="btn btn-primary" onClick={this.downloadImage}>Download chart</button>
+              <button className="btn btn-primary" onClick={this.downloadImage}>Download a JPEG of the chart below</button>
             )}
 
         <div className="packageHolder">
@@ -262,6 +203,8 @@ console.log("Line 174 || "+this.state.chart_intro);
             <Headline headlineText={this.state.chart_headline} />
             <Intro intro={this.state.chart_intro} />
             <Map />
+
+			{colorChange(this.state.chart_data)}
 
             {this.state.unusable ? (
               <div></div>

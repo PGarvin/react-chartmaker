@@ -1,58 +1,18 @@
 import React, { Component } from "react";
 import { Map } from "./Map";
+import { Bar, BarChart, Headline, Intro } from './bar-headline-intro';
 import "./Chart.css";
 import domtoimage from "dom-to-image";
 import axios from 'axios';
 
 const condensed = require('./functions.js').condensed;
+const commaSeparateNumber = require('./functions.js').commaSeparateNumber;
 const cleanNumber = require('./functions.js').cleanNumber;
 const rowObject = require('./functions.js').rowObject;
 const makeArray = require('./functions.js').makeArray;
 const cleanArray = require('./functions.js').cleanArray;
 const percent = require('./functions.js').percent;
-
-class Headline extends React.Component {
-  render() {
-    const { headlineText } = this.props;
-    return <h2>{headlineText}</h2>;
-  }
-}
-
-class Intro extends React.Component {
-  render() {
-    const { intro } = this.props;
-    return <h4>{intro}</h4>;
-  }
-}
-
-const Bar = ({ name, number, largest }) => {
-  return (
-    <div className="row">
-      <div className="Name">{name}</div>
-      <div
-        className="Value"
-        style={{ width: percent(number, largest, 60) + "%" }}>
-        <span style={{ opacity: 1 }}></span>
-      </div>
-      <div className="ValueNumber">{number}</div>
-    </div>
-  );
-};
-
-class BarChart extends React.Component {
-  render() {
-    const { bars, largest } = this.props;
-    return (
-      <div className="chartHolder">
-        <div className="horizontalBarChart">
-          {bars.map((bar, i) => (
-            <Bar key={i} name={bar.Name} number={bar.Value} largest={largest} />
-          ))}
-        </div>
-      </div>
-    );
-  }
-}
+const colorChange = require('./functions.js').colorChange;
 
 export default class CreateChart extends Component {
   constructor(props) {
@@ -62,7 +22,7 @@ export default class CreateChart extends Component {
       unusable: true,
       chart_headline: "This is a most delightful headline.",
       chart_intro: "This intro text is oh so lovely!",
-      chart_color: "",
+      chart_color: "88,136,158",
       chart_datainput: "",
       chart_data: [],
       chart_largest: 0
@@ -111,24 +71,7 @@ export default class CreateChart extends Component {
         return data[key];
       });
 
-      for (let i = 0; i < statesData.length; i += 1) {
-        //console.log(statesData[i].Name);
-        for (let j = 0; j < states.length; j += 1) {
-          if (
-            states[j].classList.contains(
-              condensed(statesData[i].Name).toLowerCase()
-            )
-          ) {
-            let opacity = percent(
-              statesData[i].Value,
-              largest_number,
-              1
-            );
-            states[j].style.fill = `rgba(88,136,158,${opacity})`;
-            states[j].style.stroke = "rgba(88,136,158,1)";
-          }
-        }
-      }
+      colorChange(statesData, this.state.chart_color);
 
       this.setState({
         unusable: false,
@@ -178,7 +121,7 @@ console.log("Line 156 || "+this.state.chart_intro);
       unusable: true,
       chart_headline: "This is a most delightful headline.",
       chart_intro: "This intro text is oh so lovely!",
-      chart_color: "",
+      chart_color: "88,136,158",
       chart_datainput: "",
       chart_data: [],
       chart_largest: 0
@@ -227,7 +170,6 @@ console.log("Line 156 || "+this.state.chart_intro);
           <textarea
             className="form-input"
             rows="10"
-            cols="80"
             value={this.state.chart_datainput}
             onChange={this.onDataChange}
           />
@@ -244,7 +186,7 @@ console.log("Line 156 || "+this.state.chart_intro);
             {this.state.unusable ? (
               <div></div>
             ) : (
-              <button className="btn btn-primary" onClick={this.downloadImage}>Download chart</button>
+				<button className="btn btn-primary" onClick={this.downloadImage}>Download a JPEG of the chart below</button>
             )}
 
         <div className="packageHolder">

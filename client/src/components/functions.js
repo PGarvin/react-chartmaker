@@ -2,6 +2,13 @@ const condensed = text => {
   return text.split(" ").join("");
 };
 
+const commaSeparateNumber = val => {
+  while (/(\d+)(\d{3})/.test(val.toString())) {
+	val = val.toString().replace(/(\d+)(\d{3})/, '$1' + ',' + '$2');
+  }
+  return val;
+}
+
 const cleanNumber = value => {
   return Number(
     value
@@ -120,11 +127,36 @@ console.log("Line 174 || "+this.state.chart_intro);
 
     }
   }
+  
+const colorChange = (statesData, color) => {
+
+for (let i = 0; i < statesData.length; i += 1) {
+      	let stateName = statesData[i].Name.toLowerCase().split(" ").join("").split(".").join("");
+        let state_SVG = document.querySelector("."+stateName);
+        let valueArray = statesData.map(function(statesDatum) {
+      return Number(statesDatum.Value);
+    });
+		let largest_number = Math.max.apply(Math, valueArray);
+			if (state_SVG !== null) {
+            let opacity = percent(
+              statesData[i].Value,
+              largest_number,
+              1
+            );
+            state_SVG.style.fill = `rgba(${color},${opacity})`;
+            state_SVG.style.stroke = `rgba(${color},1)`;			
+			console.log(opacity);
+			}
+      }
+
+}
 
 exports.condensed = condensed;
+exports.commaSeparateNumber = commaSeparateNumber;
 exports.cleanNumber = cleanNumber;
 exports.rowObject = rowObject;
 exports.makeArray = makeArray;
 exports.cleanArray = cleanArray;
 exports.percent = percent;
 exports.onDataChange = onDataChange;
+exports.colorChange = colorChange;

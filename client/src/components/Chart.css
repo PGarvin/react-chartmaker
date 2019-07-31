@@ -1,5 +1,6 @@
  .packageHolder {
-     width: 600px;
+	 width: 100%;
+     max-width: 600px;
      margin: 3rem 0;
 }
  .chartHolder {
@@ -12,7 +13,7 @@
 }
  .horizontalBarChart {
      width:100%;
-     margin-bottom: 20px;
+     margin: 2rem 0;
      display:inline-block;
      background:#fff;
 }
@@ -57,5 +58,10 @@
 }
 
 .text-input {
+	width: 100%;
+	margin-bottom: 3rem;
+}
+
+.form-input {
 	width: 100%;
 }

@@ -25,6 +25,25 @@ class App extends Component {
     			</ul>
     			</div>
     		</nav>
+    		          <h1>Use this form to make a map and chart of US data</h1>
+          <h6>
+            This data generates a JPEG of a map and bar chart showing how US
+            states compare with one another. To try this out, paste data from an
+            Excel spreadsheet, a Google Sheets document, or a CSV. When you
+            paste your data into the field, this code will evaluate if the data is
+            usable. If it is, you will be able to download a JPEG of your chart for you to use on your website, newsletter,
+            document, etc. You'll also be able to save the chart here to edit for later use.
+          </h6>
+          <h6>
+            Not sure if you have data that works?{" "}
+            <a
+              href="https://docs.google.com/spreadsheets/d/13EX9CJm0thaE5U8TCkWsSuQa4LIk6tQMrmpY4uvZNwg/edit?usp=sharing"
+              target="_blank"
+            >
+              Check out this link to see examples of data that works.
+            </a>
+          </h6>
+          <h6>Feel free to paste in that data to see how it works! </h6>
     		<br/>
     		<Route path="/" exact component={ChartsList} />
     		<Route path="/edit/:id" component={EditChart} />
