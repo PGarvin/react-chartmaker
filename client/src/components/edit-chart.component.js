@@ -209,7 +209,7 @@ export default class EditChart extends Component {
             {this.state.unusable ? (
               <div></div>
             ) : (
-              <BarChart bars={this.state.chart_data} largest={this.state.chart_largest} />
+              <BarChart bars={this.state.chart_data} largest={this.state.chart_largest} barColor={this.state.chart_color}/>
             )}
           </div>
         </div>

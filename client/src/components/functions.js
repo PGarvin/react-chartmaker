@@ -94,8 +94,8 @@ const onDataChange = (e) => {
               Math.max.apply(Math, valueArray),
               1
             );
-            states[j].style.fill = `rgba(88,136,158,${opacity})`;
-            states[j].style.stroke = "rgba(88,136,158,1)";
+            states[j].style.fill = `rgba(${this.state.chart_color},${opacity})`;
+            states[j].style.stroke = `rgba(${this.state.chart_color},1)`;
           }
         }
       }
