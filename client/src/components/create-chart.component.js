@@ -128,16 +128,7 @@ console.log("Line 156 || "+this.state.chart_intro);
         })		
   }
 
-  downloadImage() {
-        domtoimage
-        .toJpeg(document.getElementById("chart"), { quality: 1 })
-        .then(function(dataUrl) {
-          var link = document.createElement("a");
-          link.download = "map-chart.jpeg";
-          link.href = dataUrl;
-          link.click();
-        });
-  }
+ downloadImage = require('./functions.js').downloadImage;
 
   render() {
     return (
@@ -201,6 +192,11 @@ console.log("Line 156 || "+this.state.chart_intro);
               <BarChart bars={this.state.chart_data} largest={this.state.chart_largest} barColor={this.state.chart_color}/>
             )}
           </div>
+            {this.state.unusable ? (
+              <div></div>
+            ) : (
+              <div>Cool form here.</div>
+            )}
         </div>
       </div>
     );

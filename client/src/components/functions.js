@@ -1,15 +1,17 @@
-const condensed = text => {
+import domtoimage from "dom-to-image";
+
+export const condensed = text => {
   return text.split(" ").join("");
 };
 
-const commaSeparateNumber = val => {
+export const commaSeparateNumber = val => {
   while (/(\d+)(\d{3})/.test(val.toString())) {
 	val = val.toString().replace(/(\d+)(\d{3})/, '$1' + ',' + '$2');
   }
   return val;
 }
 
-const cleanNumber = value => {
+export const cleanNumber = value => {
   return Number(
     value
       .split("$")
@@ -21,12 +23,12 @@ const cleanNumber = value => {
   );
 };
 
-const rowObject = text => {
+export const rowObject = text => {
   let assets = text.split("\t");
   return { Name: assets[0], Value: cleanNumber(assets[1]) };
 };
 
-const makeArray = input => {
+export const makeArray = input => {
   const rows = input.split("\n");
   const rowArray = [];
 
@@ -38,7 +40,7 @@ const makeArray = input => {
   return rowArray;
 };
 
-const cleanArray = array => {
+export const cleanArray = array => {
   const finalArray = [];
   for (let i = 0; i < array.length; i += 1) {
     let nameCondensed = condensed(array[i].Name);
@@ -61,11 +63,11 @@ const cleanArray = array => {
   return finalArray;
 };
 
-const percent = (number, largest, percentage) => {
+export const percent = (number, largest, percentage) => {
   return (percentage * number) / largest;
 };
 
-const onDataChange = (e) => {
+export const onDataChange = (e) => {
     const states = document.querySelectorAll(".state");
     let unusability;
     let largest_number = "";
@@ -112,8 +114,6 @@ const onDataChange = (e) => {
         states[j].style.stroke = "#AAA";
       }
 
-console.log("Line 163 || "+this.state.chart_headline);
-console.log("Line 164 || "+this.state.chart_intro);
 
       this.setState({
         unusable: true,
@@ -122,13 +122,12 @@ console.log("Line 164 || "+this.state.chart_intro);
         chart_datainput: e.target.value
       });
       
-console.log("Line 173 || "+this.state.chart_headline);
-console.log("Line 174 || "+this.state.chart_intro);
+
 
     }
   }
   
-const colorChange = (statesData, color) => {
+export const colorChange = (statesData, color) => {
 
 for (let i = 0; i < statesData.length; i += 1) {
       	let stateName = statesData[i].Name.toLowerCase().split(" ").join("").split(".").join("");
@@ -145,12 +144,23 @@ for (let i = 0; i < statesData.length; i += 1) {
             );
             state_SVG.style.fill = `rgba(${color},${opacity})`;
             state_SVG.style.stroke = `rgba(${color},1)`;			
-			console.log(opacity);
 			}
       }
 
 }
 
+export const downloadImage = () => {
+        domtoimage
+        .toJpeg(document.getElementById("chart"), { quality: 1 })
+        .then(function(dataUrl) {
+          var link = document.createElement("a");
+          link.download = "map-chart.jpeg";
+          link.href = dataUrl;
+          link.click();
+        });
+  }
+
+/*
 exports.condensed = condensed;
 exports.commaSeparateNumber = commaSeparateNumber;
 exports.cleanNumber = cleanNumber;
@@ -160,3 +170,5 @@ exports.cleanArray = cleanArray;
 exports.percent = percent;
 exports.onDataChange = onDataChange;
 exports.colorChange = colorChange;
+exports.downloadImage = downloadImage;
+*/

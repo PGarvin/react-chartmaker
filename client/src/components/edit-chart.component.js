@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import domtoimage from "dom-to-image";
 import axios from 'axios';
 import { Bar, BarChart, Headline, Intro } from './bar-headline-intro';
 import { Map } from './Map';
@@ -13,7 +12,6 @@ const makeArray = require('./functions.js').makeArray;
 const cleanArray = require('./functions.js').cleanArray;
 const percent = require('./functions.js').percent;
 const colorChange = require('./functions.js').colorChange;
-
 
 
 export default class EditChart extends Component {
@@ -56,11 +54,11 @@ export default class EditChart extends Component {
 			})
 	}
 	
-	onChangeChartHeadline(e) {
+  onChangeChartHeadline(e) {
     this.setState({
       chart_headline: e.target.value
     });
-    console.log(this.state);
+    console.log(condensed("I am testing MY CODE"));
   }
 
   onChangeChartIntro(e) {
@@ -118,16 +116,7 @@ export default class EditChart extends Component {
     }
   }
 
-  downloadImage() {
-        domtoimage
-        .toJpeg(document.getElementById("chart"), { quality: 1 })
-        .then(function(dataUrl) {
-          var link = document.createElement("a");
-          link.download = "map-chart.jpeg";
-          link.href = dataUrl;
-          link.click();
-        });
-  }
+  downloadImage = require('./functions.js').downloadImage;
 
   onSubmit(e) {
     e.preventDefault();
@@ -140,7 +129,7 @@ export default class EditChart extends Component {
 		chart_largest: this.state.chart_largest
 	};
 	console.log(obj);
-	console.log("Line 183 || "+this.state.chart_datainput, this.state.chart_intro);
+	console.log("Line 143 || "+this.state.chart_datainput, this.state.chart_intro);
 	axios.post('https://evening-island-40286.herokuapp.com/charts/update/'+this.props.match.params.id, obj)
 		.then(res => console.log(res.data));
 
