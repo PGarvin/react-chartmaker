@@ -25,6 +25,7 @@ export default class EditChart extends Component {
     this.onDataChange = this.onDataChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChangeChartType = this.onChangeChartType.bind(this);
+    this.onChangeChartMap = this.onChangeChartMap.bind(this);
 		
 		this.state = {
 			chart_headline: '',
@@ -33,7 +34,8 @@ export default class EditChart extends Component {
 			chart_data: [],
 			chart_datainput: '',
 			chart_largest: 0,
-			chart_type: "bars"
+			chart_type: "bars",
+			chart_map: "USMap"
 		}
 	}
 	
@@ -47,7 +49,8 @@ export default class EditChart extends Component {
 					chart_data: response.data.chart_data,
 					chart_datainput: response.data.chart_datainput,
 					chart_largest: response.data.chart_largest,
-					chart_type: response.data.chart_type
+					chart_type: response.data.chart_type,
+					chart_map: response.data.chart_map
 				})
 				console.log(this.state);
 				colorChange(this.state.chart_data, this.state.chart_color);
@@ -85,6 +88,12 @@ export default class EditChart extends Component {
       chart_type: e.target.value
     });
     console.log(this.state.chart_type, e.target.value);
+  }
+
+  onChangeChartMap(e) {
+    this.setState({
+      chart_map: e.target.value
+    });
   }
 
   onDataChange(e) {
@@ -142,7 +151,8 @@ export default class EditChart extends Component {
 		chart_data: this.state.chart_data,
 		chart_datainput: this.state.chart_datainput,
 		chart_largest: this.state.chart_largest,
-		chart_type: this.state.chart_type
+		chart_type: this.state.chart_type,
+		chart_map: this.state.chart_map
 	};
 	axios.post('https://evening-island-40286.herokuapp.com/charts/update/'+this.props.match.params.id, obj)
 		.then(res => console.log(res.data));
@@ -154,7 +164,7 @@ export default class EditChart extends Component {
   render() {
     return (
       <div>
-      <h3>Let's update some cool data, shall we?</h3>
+            <h3>Let's update some cool data, shall we?</h3>
         <form onSubmit={this.onSubmit}>
           <div className="label-input">
             <div className="label">Please type your headline here.</div>
@@ -193,7 +203,14 @@ export default class EditChart extends Component {
 			<option value="bubbles">Bubbles chart</option>			
 			</select>
 		</div> 		
-		
+          <div className="selectHolder">
+          <div className="label">Please select your map type</div>
+			<select value={this.state.chart_map} onChange={this.onChangeChartMap} className="u-full-width">
+			<option value="USMap">US map</option>
+			<option value="MassachusettsMap">Massachusetts map</option>
+			<option value="NoMap">No map</option>			
+			</select>
+		</div>		
           <div className="label">Please paste your data here.</div>
 
           <textarea
@@ -206,7 +223,7 @@ export default class EditChart extends Component {
           <div className="form-group">
             <input
               type="submit"
-              value="Create chart"
+              value="Update chart"
               className="btn btn-primary"
             />
           </div>
@@ -222,7 +239,7 @@ export default class EditChart extends Component {
           <div className="chartHolder" id="chart">
             <Headline headlineText={this.state.chart_headline} />
             <Intro intro={this.state.chart_intro} />
-            <Map />
+            <Map mapType="USMap" />
 
             {this.state.unusable === true ? (
               <div></div>

@@ -27,7 +27,8 @@ export default class CreateChart extends Component {
       chart_datainput: "",
       chart_data: [],
       chart_largest: 0,
-      chart_type: "bars"
+      chart_type: "bars",
+      chart_map: "USMap"
     };
 
     this.onChangeChartHeadline = this.onChangeChartHeadline.bind(this);
@@ -36,6 +37,7 @@ export default class CreateChart extends Component {
     this.onDataChange = this.onDataChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChangeChartType = this.onChangeChartType.bind(this);
+    this.onChangeChartMap = this.onChangeChartMap.bind(this);
   }
 
   onChangeChartHeadline(e) {
@@ -60,6 +62,12 @@ export default class CreateChart extends Component {
   onChangeChartType(e) {
     this.setState({
       chart_type: e.target.value
+    });
+  }
+
+  onChangeChartMap(e) {
+    this.setState({
+      chart_map: e.target.value
     });
   }
 
@@ -116,7 +124,8 @@ export default class CreateChart extends Component {
 		chart_data: this.state.chart_data,
 		chart_datainput: this.state.chart_datainput,
 		chart_largest: this.state.chart_largest,
-		chart_type: this.state.chart_type
+		chart_type: this.state.chart_type,
+		chart_map: this.state.chart_map
 	};
 
 	axios.post('https://evening-island-40286.herokuapp.com/charts/add', newChart)
@@ -130,7 +139,8 @@ export default class CreateChart extends Component {
       chart_datainput: "",
       chart_data: [],
       chart_largest: 0,
-      chart_type: "bars"
+      chart_type: "bars",
+      chart_map: "USMap"
         })		
   }
 
@@ -177,7 +187,14 @@ export default class CreateChart extends Component {
 			<option value="bubbles">Bubbles chart</option>			
 			</select>
 		</div> 		
-		
+          <div className="selectHolder">
+          <div className="label">Please select your map type</div>
+			<select value={this.state.chart_map} onChange={this.onChangeChartMap} className="u-full-width">
+			<option value="USMap">US map</option>
+			<option value="MassachusettsMap">Massachusetts map</option>
+			<option value="NoMap">No map</option>			
+			</select>
+		</div>		
           <div className="label">Please paste your data here.</div>
 
           <textarea
@@ -206,7 +223,7 @@ export default class CreateChart extends Component {
           <div className="chartHolder" id="chart">
             <Headline headlineText={this.state.chart_headline} />
             <Intro intro={this.state.chart_intro} />
-            <Map />
+            <Map mapType="USMap" />
 
             {this.state.unusable === true ? (
               <div></div>

@@ -22,6 +22,9 @@ let Chart = new Schema({
 	},
 	chart_type: {
 		type: String
+	},
+	chart_map: {
+		type: String
 	}
 });
 
