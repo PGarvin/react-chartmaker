@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Map } from "./Map";
-import { Bar, BarChart, Headline, Intro } from './bar-headline-intro';
+import { Chart, Bar, BarChart, Headline, Intro } from './bar-headline-intro';
 import "./Chart.css";
 import domtoimage from "dom-to-image";
 import axios from 'axios';
@@ -22,10 +22,11 @@ export default class CreateChart extends Component {
       unusable: true,
       chart_headline: "This is a most delightful headline.",
       chart_intro: "This intro text is oh so lovely!",
-      chart_color: "88,136,158",
+      chart_color: "0,93,199",
       chart_datainput: "",
       chart_data: [],
-      chart_largest: 0
+      chart_largest: 0,
+      chart_type: "bars"
     };
 
     this.onChangeChartHeadline = this.onChangeChartHeadline.bind(this);
@@ -33,13 +34,13 @@ export default class CreateChart extends Component {
     this.onChangeChartColor = this.onChangeChartColor.bind(this);
     this.onDataChange = this.onDataChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onChangeChartType = this.onChangeChartType.bind(this);
   }
 
   onChangeChartHeadline(e) {
     this.setState({
       chart_headline: e.target.value
     });
-    console.log(condensed("I am testing MY CODE"));
   }
 
   onChangeChartIntro(e) {
@@ -51,6 +52,13 @@ export default class CreateChart extends Component {
   onChangeChartColor(e) {
     this.setState({
       chart_color: e.target.value
+    });
+    colorChange(this.state.chart_data, e.target.value);
+  }
+
+  onChangeChartType(e) {
+    this.setState({
+      chart_type: e.target.value
     });
   }
 
@@ -86,9 +94,6 @@ export default class CreateChart extends Component {
         states[j].style.stroke = "#AAA";
       }
 
-console.log("Line 145 || "+this.state.chart_headline);
-console.log("Line 145 || "+this.state.chart_intro);
-
      this.setState({
         unusable: true,
         chart_largest: largest_number,
@@ -96,10 +101,8 @@ console.log("Line 145 || "+this.state.chart_intro);
         chart_datainput: e.target.value
       });
     
-console.log("Line 155 || "+this.state.chart_headline);
-console.log("Line 156 || "+this.state.chart_intro);
-
     }
+    console.log(this.state);
   }
 
   onSubmit(e) {
@@ -111,7 +114,8 @@ console.log("Line 156 || "+this.state.chart_intro);
 		chart_color: this.state.chart_color,
 		chart_data: this.state.chart_data,
 		chart_datainput: this.state.chart_datainput,
-		chart_largest: this.state.chart_largest
+		chart_largest: this.state.chart_largest,
+		chart_type: this.state.chart_type
 	};
 
 	axios.post('https://evening-island-40286.herokuapp.com/charts/add', newChart)
@@ -121,10 +125,11 @@ console.log("Line 156 || "+this.state.chart_intro);
       unusable: true,
       chart_headline: "This is a most delightful headline.",
       chart_intro: "This intro text is oh so lovely!",
-      chart_color: "88,136,158",
+      chart_color: "0,93,199",
       chart_datainput: "",
       chart_data: [],
-      chart_largest: 0
+      chart_largest: 0,
+      chart_type: "bars"
         })		
   }
 
@@ -139,7 +144,6 @@ console.log("Line 156 || "+this.state.chart_intro);
             <input
               className="text-input"
               type="input"
-              defaultValue="Headline goes here."
               id="headline"
               defaultValue={this.state.chart_headline}
               onChange={this.onChangeChartHeadline}
@@ -150,12 +154,29 @@ console.log("Line 156 || "+this.state.chart_intro);
             <input
               className="text-input"
               type="input"
-              defaultValue="This is great intro text."
               id="intro"
               defaultValue={this.state.chart_intro}
               onChange={this.onChangeChartIntro}
             />
           </div>
+          <div className="selectHolder">
+          <div className="label">Please select your color</div>
+			<select value={this.state.chart_color} onChange={this.onChangeChartColor} className="u-full-width">
+			<option value="0,93,199">Blue</option>
+			<option value="158,21,17">Red</option>
+			<option value="222,125,11">Orange</option>
+			<option value="102, 51, 153">Purple</option>
+			<option value="44, 83, 0">Green</option>
+			</select>
+		</div> 
+          <div className="selectHolder">
+          <div className="label">Please select your chart type</div>
+			<select value={this.state.chart_type} onChange={this.onChangeChartType} className="u-full-width">
+			<option value="bars">Bar chart</option>
+			<option value="bubbles">Bubbles chart</option>			
+			</select>
+		</div> 		
+		
           <div className="label">Please paste your data here.</div>
 
           <textarea
@@ -168,7 +189,7 @@ console.log("Line 156 || "+this.state.chart_intro);
           <div className="form-group">
             <input
               type="submit"
-              value="Create Chart"
+              value="Create chart"
               className="btn btn-primary"
             />
           </div>
@@ -186,16 +207,16 @@ console.log("Line 156 || "+this.state.chart_intro);
             <Intro intro={this.state.chart_intro} />
             <Map />
 
-            {this.state.unusable ? (
+            {this.state.unusable === true ? (
               <div></div>
             ) : (
-              <BarChart bars={this.state.chart_data} largest={this.state.chart_largest} barColor={this.state.chart_color}/>
+              <Chart chartType={this.state.chart_type} data={this.state.chart_data} largest={this.state.chart_largest} barColor={this.state.chart_color}/>
             )}
           </div>
             {this.state.unusable ? (
               <div></div>
             ) : (
-              <div>Cool form here.</div>
+              <div id="coolFormToGoHere"></div>
             )}
         </div>
       </div>

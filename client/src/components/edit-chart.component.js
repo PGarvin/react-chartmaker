@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Bar, BarChart, Headline, Intro } from './bar-headline-intro';
+import { Chart, Bar, BarChart, Headline, Intro } from './bar-headline-intro';
 import { Map } from './Map';
 import './Chart.css';
 
@@ -18,11 +18,12 @@ export default class EditChart extends Component {
 	constructor(props) {
 		super(props);
 		
-		this.onChangeChartHeadline = this.onChangeChartHeadline.bind(this);
-		this.onChangeChartIntro = this.onChangeChartIntro.bind(this);
-		this.onChangeChartColor = this.onChangeChartColor.bind(this);
-		this.onDataChange = this.onDataChange.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
+    this.onChangeChartHeadline = this.onChangeChartHeadline.bind(this);
+    this.onChangeChartIntro = this.onChangeChartIntro.bind(this);
+    this.onChangeChartColor = this.onChangeChartColor.bind(this);
+    this.onDataChange = this.onDataChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChangeChartType = this.onChangeChartType.bind(this);
 		
 		this.state = {
 			chart_headline: '',
@@ -30,7 +31,8 @@ export default class EditChart extends Component {
 			chart_color: '',
 			chart_data: [],
 			chart_datainput: '',
-			chart_largest: 0
+			chart_largest: 0,
+			chart_type: "bars"
 		}
 	}
 	
@@ -43,7 +45,8 @@ export default class EditChart extends Component {
 					chart_color: response.data.chart_color,
 					chart_data: response.data.chart_data,
 					chart_datainput: response.data.chart_datainput,
-					chart_largest: response.data.chart_largest
+					chart_largest: response.data.chart_largest,
+					chart_type: response.data.chart_type
 				})
 				console.log(this.state);
 				colorChange(this.state.chart_data, this.state.chart_color);
@@ -72,6 +75,15 @@ export default class EditChart extends Component {
     this.setState({
       chart_color: e.target.value
     });
+    colorChange(this.state.chart_data, e.target.value);
+  }
+
+  onChangeChartType(e) {
+  	console.log(this.state.chart_type, e.target.value);
+    this.setState({
+      chart_type: e.target.value
+    });
+    console.log(this.state.chart_type, e.target.value);
   }
 
   onDataChange(e) {
@@ -114,6 +126,8 @@ export default class EditChart extends Component {
       
 
     }
+  
+  console.log(document.getElementById('chart').innerHTML.split('><').join('>\n<'));
   }
 
   downloadImage = require('./functions.js').downloadImage;
@@ -126,10 +140,9 @@ export default class EditChart extends Component {
 		chart_color: this.state.chart_color,
 		chart_data: this.state.chart_data,
 		chart_datainput: this.state.chart_datainput,
-		chart_largest: this.state.chart_largest
+		chart_largest: this.state.chart_largest,
+		chart_type: this.state.chart_type
 	};
-	console.log(obj);
-	console.log("Line 143 || "+this.state.chart_datainput, this.state.chart_intro);
 	axios.post('https://evening-island-40286.herokuapp.com/charts/update/'+this.props.match.params.id, obj)
 		.then(res => console.log(res.data));
 
@@ -137,11 +150,10 @@ export default class EditChart extends Component {
   }
 	
 	
-    render() {
-    
+  render() {
     return (
       <div>
-      	<h3>Let's update some cool data, shall we?</h3>
+      <h3>Let's update some cool data, shall we?</h3>
         <form onSubmit={this.onSubmit}>
           <div className="label-input">
             <div className="label">Please type your headline here.</div>
@@ -163,6 +175,24 @@ export default class EditChart extends Component {
               onChange={this.onChangeChartIntro}
             />
           </div>
+          <div className="selectHolder">
+          <div className="label">Please select your color</div>
+			<select value={this.state.chart_color} onChange={this.onChangeChartColor} className="u-full-width">
+			<option value="0,93,199">Blue</option>
+			<option value="158,21,17">Red</option>
+			<option value="222,125,11">Orange</option>
+			<option value="102, 51, 153">Purple</option>
+			<option value="44, 83, 0">Green</option>
+			</select>
+		</div> 
+          <div className="selectHolder">
+          <div className="label">Please select your chart type</div>
+			<select value={this.state.chart_type} onChange={this.onChangeChartType} className="u-full-width">
+			<option value="bars">Bar chart</option>
+			<option value="bubbles">Bubbles chart</option>			
+			</select>
+		</div> 		
+		
           <div className="label">Please paste your data here.</div>
 
           <textarea
@@ -175,7 +205,7 @@ export default class EditChart extends Component {
           <div className="form-group">
             <input
               type="submit"
-              value="Update chart"
+              value="Create chart"
               className="btn btn-primary"
             />
           </div>
@@ -184,7 +214,7 @@ export default class EditChart extends Component {
             {this.state.unusable ? (
               <div></div>
             ) : (
-              <button className="btn btn-primary" onClick={this.downloadImage}>Download a JPEG of the chart below</button>
+				<button className="btn btn-primary" onClick={this.downloadImage}>Download a JPEG of the chart below</button>
             )}
 
         <div className="packageHolder">
@@ -193,18 +223,19 @@ export default class EditChart extends Component {
             <Intro intro={this.state.chart_intro} />
             <Map />
 
-			{colorChange(this.state.chart_data)}
-
+            {this.state.unusable === true ? (
+              <div></div>
+            ) : (
+	<div> {this.state.chart_type} is the chart type.</div>
+	            )}
+          </div>
             {this.state.unusable ? (
               <div></div>
             ) : (
-              <BarChart bars={this.state.chart_data} largest={this.state.chart_largest} barColor={this.state.chart_color}/>
+              <div id="coolFormToGoHere"></div>
             )}
-          </div>
         </div>
       </div>
     );
-  
-    
-    }
+  }
 }

@@ -36,6 +36,63 @@ export class BarChart extends React.Component {
   }
 }
 
+export class Bubble extends React.Component {
+  render() {
+    const { name, number, largest, color } = this.props;
+    let percentage = Math.sqrt(number/largest)*100;
+    let margins = Number(100 - percentage)/2;
+    
+    return (
+<div className="bubble__holder">
+<div className="Name">{name}</div>
+    <div className="square" style={{width: `${percentage}%`, marginLeft:`${margins}%`}}>
+            <svg id="svg" version="1.1" xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 400 400" enableBackground="new 0 0 400 400">
+        <circle fill={`rgba(${color},1)`} cx="200" cy="200" r="199"/>
+</svg>
+        
+            
+    </div>
+            <p className="Value">{commaSeparateNumber(number)}</p>
+</div>
+  );
+}
+}
+
+
+
+export class BubbleChart extends React.Component {
+  render() {
+    const { bubbles, largest, bubbleColor } = this.props;
+    console.log(bubbleColor, largest);
+    return (
+      <div className="chartHolder">
+        <div className="bubbleChart">
+          {bubbles.map((bubble, i) => (
+            <Bubble key={i} name={bubble.Name} number={bubble.Value} largest={largest} color={bubbleColor}/>
+          ))}
+        </div>
+      </div>
+    );
+  }
+}
+
+export class Chart extends React.Component {
+  render() {
+    const { data, bars, largest, barColor, chartType } = this.props;
+	let chartContents;
+	
+	if (chartType === "bars") {
+		chartContents = <BarChart bars={data} largest={largest} barColor={barColor}/>;
+	}
+	if (chartType === "bubbles") {
+		chartContents = <BubbleChart bubbles={data} largest={largest} bubbleColor={barColor}/>;
+	}
+    return (
+		chartContents
+    );
+  }
+}
+
 export class Headline extends React.Component {
   render() {
     const { headlineText } = this.props;

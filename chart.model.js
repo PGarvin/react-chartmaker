@@ -19,6 +19,9 @@ let Chart = new Schema({
 	},
 	chart_largest: {
 		type: Number
+	},
+	chart_type: {
+		type: String
 	}
 });
 
