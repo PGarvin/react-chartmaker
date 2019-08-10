@@ -4,6 +4,7 @@ import { Chart, Bar, BarChart, Headline, Intro } from './bar-headline-intro';
 import { Map } from './Map';
 import './Chart.css';
 
+
 const condensed = require('./functions.js').condensed;
 const commaSeparateNumber = require('./functions.js').commaSeparateNumber;
 const cleanNumber = require('./functions.js').cleanNumber;
@@ -53,7 +54,7 @@ export default class EditChart extends Component {
 			})
 			.catch(function (error) {
 				console.log(error);
-				console.log("The error is coming from line 88 in edit-chart.component.js");
+				console.log("The error is.. coming from line 88 in edit-chart.component.js");
 			})
 	}
 	

@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const percent = require('./functions.js').percent;
 const commaSeparateNumber = require('./functions.js').commaSeparateNumber;
 
