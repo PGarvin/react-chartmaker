@@ -80,11 +80,12 @@ export class Chart extends React.Component {
   render() {
     const { data, bars, largest, barColor, chartType } = this.props;
 	let chartContents;
+	let desiredChart = chartType.split(" ").join("");
 	
-	if (chartType === "bars") {
+	if (desiredChart === "bars") {
 		chartContents = <BarChart bars={data} largest={largest} barColor={barColor}/>;
 	}
-	if (chartType === "bubbles") {
+	if (desiredChart === "bubbles") {
 		chartContents = <BubbleChart bubbles={data} largest={largest} bubbleColor={barColor}/>;
 	}
     return (

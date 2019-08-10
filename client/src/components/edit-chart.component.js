@@ -226,8 +226,8 @@ export default class EditChart extends Component {
             {this.state.unusable === true ? (
               <div></div>
             ) : (
-	<div> {this.state.chart_type} is the chart type.</div>
-	            )}
+              <Chart chartType={this.state.chart_type} data={this.state.chart_data} largest={this.state.chart_largest} barColor={this.state.chart_color}/>
+            )}
           </div>
             {this.state.unusable ? (
               <div></div>
