@@ -13,9 +13,9 @@ let Chart = require('./chart.model');
 app.use(cors());
 app.use(bodyParser.json());
 
-const MONGODB_URI = "mongodb+srv://pgarvin:ShowMe2018@chartmakercluster-m69dh.gcp.mongodb.net/test?retryWrites=true&w=majority";
+const MONGODB_URI = MONGODB_URI;
 const LOCAL_DB = "mongodb://127.0.0.1:27017/charts"; 
-mongoose.connect('mongodb+srv://pgarvin:ShowMe2018@chartmakercluster-m69dh.gcp.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 const connection = mongoose.connection;
 
