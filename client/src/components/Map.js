@@ -4,7 +4,10 @@ import { MassachusettsMap } from "./MassachusettsMap";
 
 
 
+
+
 export class Map extends React.Component {
+
   render() {
     const { mapType } = this.props;
 

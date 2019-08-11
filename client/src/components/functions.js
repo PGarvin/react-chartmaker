@@ -2,6 +2,8 @@ import domtoimage from "dom-to-image";
 
 
 
+
+
 export const condensed = text => {
 	console.log(text);
   return text.split(" ").join("");

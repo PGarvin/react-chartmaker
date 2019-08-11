@@ -6,6 +6,7 @@ import "./Chart.css";
 
 
 
+
 const condensed = require("./functions.js").condensed;
 const commaSeparateNumber = require("./functions.js").commaSeparateNumber;
 const cleanNumber = require("./functions.js").cleanNumber;

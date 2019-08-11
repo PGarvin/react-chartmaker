@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
+
 let Chart = new Schema({
 	chart_headline: {
 		type: String

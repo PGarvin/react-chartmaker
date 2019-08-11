@@ -4,6 +4,7 @@ import axios from "axios";
 
 
 
+
 const Chart = props => (
   <tr>
     <td>{props.chart.chart_headline}</td>
