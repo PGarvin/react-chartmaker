@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { Map } from "./Map";
-import { Chart, Bar, BarChart, Headline, Intro } from './bar-headline-intro';
+import { Chart, Bar, BarChart, Headline, Intro } from "./bar-headline-intro";
 import "./Chart.css";
 import domtoimage from "dom-to-image";
-import axios from 'axios';
+import axios from "axios";
 
-const condensed = require('./functions.js').condensed;
-const commaSeparateNumber = require('./functions.js').commaSeparateNumber;
-const cleanNumber = require('./functions.js').cleanNumber;
-const rowObject = require('./functions.js').rowObject;
-const makeArray = require('./functions.js').makeArray;
-const cleanArray = require('./functions.js').cleanArray;
-const percent = require('./functions.js').percent;
-const colorChange = require('./functions.js').colorChange;
+const condensed = require("./functions.js").condensed;
+const commaSeparateNumber = require("./functions.js").commaSeparateNumber;
+const cleanNumber = require("./functions.js").cleanNumber;
+const rowObject = require("./functions.js").rowObject;
+const makeArray = require("./functions.js").makeArray;
+const cleanArray = require("./functions.js").cleanArray;
+const percent = require("./functions.js").percent;
+const colorChange = require("./functions.js").colorChange;
 
 export default class CreateChart extends Component {
   constructor(props) {
@@ -65,12 +65,14 @@ export default class CreateChart extends Component {
   }
 
   onChangeChartMap(e) {
-    this.setState({
-      chart_map: e.target.value
-      }, () => {
-    colorChange(this.state.chart_data, this.state.chart_color);
-    });
-
+    this.setState(
+      {
+        chart_map: e.target.value
+      },
+      () => {
+        colorChange(this.state.chart_data, this.state.chart_color);
+      }
+    );
   }
 
   onDataChange(e) {
@@ -82,8 +84,8 @@ export default class CreateChart extends Component {
     let valueArray = data.map(function(datum) {
       return Number(datum.Value);
     });
-	let largest_number = Math.max.apply(Math, valueArray);
-	console.log(largest_number);
+    let largest_number = Math.max.apply(Math, valueArray);
+    console.log(largest_number);
 
     if (data.length >= 2) {
       const statesData = Object.keys(data).map(function(key) {
@@ -105,13 +107,12 @@ export default class CreateChart extends Component {
         states[j].style.stroke = "#AAA";
       }
 
-     this.setState({
+      this.setState({
         unusable: true,
         chart_largest: largest_number,
         chart_data: data,
         chart_datainput: e.target.value
       });
-    
     }
     console.log(this.state);
   }
@@ -119,19 +120,20 @@ export default class CreateChart extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-	const newChart = {
-		chart_headline: this.state.chart_headline,
-		chart_intro: this.state.chart_intro,
-		chart_color: this.state.chart_color,
-		chart_data: this.state.chart_data,
-		chart_datainput: this.state.chart_datainput,
-		chart_largest: this.state.chart_largest,
-		chart_type: this.state.chart_type,
-		chart_map: this.state.chart_map
-	};
+    const newChart = {
+      chart_headline: this.state.chart_headline,
+      chart_intro: this.state.chart_intro,
+      chart_color: this.state.chart_color,
+      chart_data: this.state.chart_data,
+      chart_datainput: this.state.chart_datainput,
+      chart_largest: this.state.chart_largest,
+      chart_type: this.state.chart_type,
+      chart_map: this.state.chart_map
+    };
 
-	axios.post('https://evening-island-40286.herokuapp.com/charts/add', newChart)
-		.then(res => console.log(res.data));
+    axios
+      .post("https://evening-island-40286.herokuapp.com/charts/add", newChart)
+      .then(res => console.log(res.data));
 
     this.setState({
       unusable: true,
@@ -143,29 +145,33 @@ export default class CreateChart extends Component {
       chart_largest: 0,
       chart_type: "bars",
       chart_map: "USMap"
-        })		
+    });
   }
 
- downloadImage = require('./functions.js').downloadImage;
+  downloadImage = require("./functions.js").downloadImage;
 
-render() {
+  render() {
     return (
       <div>
         <form onSubmit={this.onSubmit}>
-                 <div className="label">Please paste data below; Examples of usable data can be found <a href="https://docs.google.com/spreadsheets/d/13EX9CJm0thaE5U8TCkWsSuQa4LIk6tQMrmpY4uvZNwg/edit?usp=sharing"
+          <div className="label">
+            Please paste data below; Examples of usable data can be found{" "}
+            <a
+              href="https://docs.google.com/spreadsheets/d/13EX9CJm0thaE5U8TCkWsSuQa4LIk6tQMrmpY4uvZNwg/edit?usp=sharing"
               target="_blank"
-            >here</a></div>
-                
-                 <div>
-                 
+            >
+              here
+            </a>
+          </div>
 
-          <textarea
-            className="form-input"
-            rows="10"
-            value={this.state.chart_datainput}
-            onChange={this.onDataChange}
-          />
-        </div>
+          <div>
+            <textarea
+              className="form-input"
+              rows="10"
+              value={this.state.chart_datainput}
+              onChange={this.onDataChange}
+            />
+          </div>
           <div className="label-input">
             <div className="label">Please type headline here</div>
             <input
@@ -187,49 +193,58 @@ render() {
             />
           </div>
           <div className="selectHolder">
-          <div className="label">Please select color</div>
-			<select value={this.state.chart_color} onChange={this.onChangeChartColor} className="u-full-width">
-			<option value="0,93,199">Blue</option>
-			<option value="158,21,17">Red</option>
-			<option value="222,125,11">Orange</option>
-			<option value="102, 51, 153">Purple</option>
-			<option value="44, 83, 0">Green</option>
-			</select>
-		</div> 
+            <div className="label">Please select color</div>
+            <select
+              value={this.state.chart_color}
+              onChange={this.onChangeChartColor}
+              className="u-full-width"
+            >
+              <option value="0,93,199">Blue</option>
+              <option value="158,21,17">Red</option>
+              <option value="222,125,11">Orange</option>
+              <option value="102, 51, 153">Purple</option>
+              <option value="44, 83, 0">Green</option>
+            </select>
+          </div>
           <div className="selectHolder">
-          <div className="label">Please select chart type</div>
-			<select value={this.state.chart_type} onChange={this.onChangeChartType} className="u-full-width">
-			<option value="bars">Bar chart</option>
-			<option value="bubbles">Bubbles chart</option>			
-			</select>
-		</div> 		
+            <div className="label">Please select chart type</div>
+            <select
+              value={this.state.chart_type}
+              onChange={this.onChangeChartType}
+              className="u-full-width"
+            >
+              <option value="bars">Bar chart</option>
+              <option value="bubbles">Bubbles chart</option>
+            </select>
+          </div>
           <div className="selectHolder">
-          <div className="label">Please select map type</div>
-			<select value={this.state.chart_map} onChange={this.onChangeChartMap} className="u-full-width">
-			<option value="USMap">US map</option>
-			<option value="MassachusettsMap">Massachusetts map</option>
-			<option value="NoMap">No map</option>			
-			</select>
-		</div>		
-
-
+            <div className="label">Please select map type</div>
+            <select
+              value={this.state.chart_map}
+              onChange={this.onChangeChartMap}
+              className="u-full-width"
+            >
+              <option value="USMap">US map</option>
+              <option value="MassachusettsMap">Massachusetts map</option>
+              <option value="NoMap">No map</option>
+            </select>
+          </div>
         </form>
 
-<div className="btn-holder">
-
-
-
-
-            {this.state.unusable ? (
-              <div></div>
-            ) : (
-            	<div>
-            	<button className="btn btn-primary" onClick={this.onSubmit}>Create chart</button>
-				<button className="btn btn-primary" onClick={this.downloadImage}>Download a JPEG of the chart below</button>
+        <div className="btn-holder">
+          {this.state.unusable ? (
+            <div></div>
+          ) : (
+            <div>
+              <button className="btn btn-primary" onClick={this.onSubmit}>
+                Create chart
+              </button>
+              <button className="btn btn-primary" onClick={this.downloadImage}>
+                Download a JPEG of the chart below
+              </button>
             </div>
-            )}
-
-</div>
+          )}
+        </div>
 
         <div className="packageHolder">
           <div className="chartHolder" id="chart">
@@ -240,14 +255,19 @@ render() {
             {this.state.unusable === true ? (
               <div></div>
             ) : (
-              <Chart chartType={this.state.chart_type} data={this.state.chart_data} largest={this.state.chart_largest} barColor={this.state.chart_color}/>
+              <Chart
+                chartType={this.state.chart_type}
+                data={this.state.chart_data}
+                largest={this.state.chart_largest}
+                barColor={this.state.chart_color}
+              />
             )}
           </div>
-            {this.state.unusable ? (
-              <div></div>
-            ) : (
-              <div id="coolFormToGoHere"></div>
-            )}
+          {this.state.unusable ? (
+            <div></div>
+          ) : (
+            <div id="coolFormToGoHere"></div>
+          )}
         </div>
       </div>
     );
