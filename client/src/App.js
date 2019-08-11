@@ -7,6 +7,7 @@ import CreateChart from "./components/create-chart.component";
 import EditChart from "./components/edit-chart.component";
 import ChartsList from "./components/charts-list.component";
 
+
 class App extends Component {
   render() {
     return (

@@ -10,6 +10,7 @@ require('dotenv').config();
 
 let Chart = require('./chart.model');
 
+
 app.use(cors());
 app.use(bodyParser.json());
 
