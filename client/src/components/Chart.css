@@ -2,6 +2,7 @@
 	 width: 100%;
      max-width: 600px;
      margin: 3rem 0;
+     display: flex;
 }
  .chartHolder {
      width: 100%;
@@ -23,6 +24,24 @@
 
 .form-input {
 	width: 100%;
+}
+
+.selectHolder {
+	margin-bottom: 1.5rem;
+	width: 100%;
+	float: left;
+}
+
+.btn {
+    margin-right: 1rem;
+    margin-bottom: 2rem;
+}
+
+.btn-holder {
+	width: 100%;
+	float: left;
+	display: inline-block;
+	margin: 1rem auto;
 }
 
  .horizontalBarChart {
@@ -69,8 +88,6 @@
      fill: #EEE;
      stroke: #AAA;
 }
-
-
 
 .bubbleChart {
   display: -webkit-box;
@@ -127,6 +144,24 @@
 .bubble__holder {
 	width:30%;
 	margin: 1.5%;
+}
+
+.selectHolder {
+	margin-bottom: 1.5rem;
+	width: 47%;
+	margin-right:3%;
+	float: left;
+}
+
+}
+
+@media screen and (min-width: 600px) {
+
+.selectHolder {
+	margin-bottom: 1.5rem;
+	width: 30%;
+	margin-right:3%;
+	float: left;
 }
 
 }

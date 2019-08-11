@@ -170,8 +170,22 @@ export default class EditChart extends Component {
       <div>
             <h3>Let's update some cool data, shall we?</h3>
         <form onSubmit={this.onSubmit}>
+                 <div className="label">Please paste data below; Examples of usable data can be found <a href="https://docs.google.com/spreadsheets/d/13EX9CJm0thaE5U8TCkWsSuQa4LIk6tQMrmpY4uvZNwg/edit?usp=sharing"
+              target="_blank"
+            >here</a></div>
+                
+                 <div>
+                 
+
+          <textarea
+            className="form-input"
+            rows="10"
+            value={this.state.chart_datainput}
+            onChange={this.onDataChange}
+          />
+        </div>
           <div className="label-input">
-            <div className="label">Please type your headline here.</div>
+            <div className="label">Please type headline here</div>
             <input
               className="text-input"
               type="input"
@@ -181,7 +195,7 @@ export default class EditChart extends Component {
             />
           </div>
           <div className="label-input">
-            <div className="label">Please type your intro text here.</div>
+            <div className="label">Please type intro text here</div>
             <input
               className="text-input"
               type="input"
@@ -191,7 +205,7 @@ export default class EditChart extends Component {
             />
           </div>
           <div className="selectHolder">
-          <div className="label">Please select your color</div>
+          <div className="label">Please select color</div>
 			<select value={this.state.chart_color} onChange={this.onChangeChartColor} className="u-full-width">
 			<option value="0,93,199">Blue</option>
 			<option value="158,21,17">Red</option>
@@ -201,43 +215,36 @@ export default class EditChart extends Component {
 			</select>
 		</div> 
           <div className="selectHolder">
-          <div className="label">Please select your chart type</div>
+          <div className="label">Please select chart type</div>
 			<select value={this.state.chart_type} onChange={this.onChangeChartType} className="u-full-width">
 			<option value="bars">Bar chart</option>
 			<option value="bubbles">Bubbles chart</option>			
 			</select>
 		</div> 		
           <div className="selectHolder">
-          <div className="label">Please select your map type</div>
+          <div className="label">Please select map type</div>
 			<select value={this.state.chart_map} onChange={this.onChangeChartMap} className="u-full-width">
 			<option value="USMap">US map</option>
 			<option value="MassachusettsMap">Massachusetts map</option>
 			<option value="NoMap">No map</option>			
 			</select>
 		</div>		
-          <div className="label">Please paste your data here.</div>
 
-          <textarea
-            className="form-input"
-            rows="10"
-            value={this.state.chart_datainput}
-            onChange={this.onDataChange}
-          />
 
-          <div className="form-group">
-            <input
-              type="submit"
-              value="Update chart"
-              className="btn btn-primary"
-            />
-          </div>
         </form>
+
+<div className="btn-holder">
+
+<button className="btn btn-primary" onClick={this.onSubmit}>Update the chart</button>
+
 
             {this.state.unusable ? (
               <div></div>
             ) : (
 				<button className="btn btn-primary" onClick={this.downloadImage}>Download a JPEG of the chart below</button>
             )}
+
+</div>
 
         <div className="packageHolder">
           <div className="chartHolder" id="chart">
