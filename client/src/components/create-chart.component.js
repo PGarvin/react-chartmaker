@@ -5,7 +5,6 @@ import "./Chart.css";
 import domtoimage from "dom-to-image";
 import axios from 'axios';
 
-
 const condensed = require('./functions.js').condensed;
 const commaSeparateNumber = require('./functions.js').commaSeparateNumber;
 const cleanNumber = require('./functions.js').cleanNumber;

@@ -4,6 +4,7 @@ import { Chart, Bar, BarChart, Headline, Intro } from './bar-headline-intro';
 import { Map } from './Map';
 import './Chart.css';
 
+
 const condensed = require('./functions.js').condensed;
 const commaSeparateNumber = require('./functions.js').commaSeparateNumber;
 const cleanNumber = require('./functions.js').cleanNumber;
