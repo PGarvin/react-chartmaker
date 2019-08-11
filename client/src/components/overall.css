@@ -1,0 +1,26 @@
+ .packageHolder {
+	 width: 100%;
+     max-width: 600px;
+     margin: 3rem 0;
+}
+ .chartHolder {
+     width: 100%;
+     background: #fff;
+}
+ .chart {
+     width:100%;
+     background: #fff;
+}
+
+.label {
+	margin-top:2rem;
+}
+
+.text-input {
+	width: 100%;
+	margin-bottom: 1rem;
+}
+
+.form-input {
+	width: 100%;
+}
