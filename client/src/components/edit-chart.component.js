@@ -14,7 +14,6 @@ const cleanArray = require('./functions.js').cleanArray;
 const percent = require('./functions.js').percent;
 const colorChange = require('./functions.js').colorChange;
 
-
 export default class EditChart extends Component {
 	constructor(props) {
 		super(props);
@@ -93,7 +92,10 @@ export default class EditChart extends Component {
   onChangeChartMap(e) {
     this.setState({
       chart_map: e.target.value
+      }, () => {
+    colorChange(this.state.chart_data, this.state.chart_color);
     });
+
   }
 
   onDataChange(e) {
@@ -239,7 +241,7 @@ export default class EditChart extends Component {
           <div className="chartHolder" id="chart">
             <Headline headlineText={this.state.chart_headline} />
             <Intro intro={this.state.chart_intro} />
-            <Map mapType="USMap" />
+            <Map mapType={this.state.chart_map} />
 
             {this.state.unusable === true ? (
               <div></div>

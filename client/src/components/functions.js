@@ -1,6 +1,7 @@
 import domtoimage from "dom-to-image";
 
 export const condensed = text => {
+	console.log(text);
   return text.split(" ").join("");
 };
 
@@ -159,16 +160,3 @@ export const downloadImage = () => {
           link.click();
         });
   }
-
-/*
-exports.condensed = condensed;
-exports.commaSeparateNumber = commaSeparateNumber;
-exports.cleanNumber = cleanNumber;
-exports.rowObject = rowObject;
-exports.makeArray = makeArray;
-exports.cleanArray = cleanArray;
-exports.percent = percent;
-exports.onDataChange = onDataChange;
-exports.colorChange = colorChange;
-exports.downloadImage = downloadImage;
-*/

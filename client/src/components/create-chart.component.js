@@ -68,7 +68,10 @@ export default class CreateChart extends Component {
   onChangeChartMap(e) {
     this.setState({
       chart_map: e.target.value
+      }, () => {
+    colorChange(this.state.chart_data, this.state.chart_color);
     });
+
   }
 
   onDataChange(e) {
@@ -223,7 +226,7 @@ export default class CreateChart extends Component {
           <div className="chartHolder" id="chart">
             <Headline headlineText={this.state.chart_headline} />
             <Intro intro={this.state.chart_intro} />
-            <Map mapType="USMap" />
+            <Map mapType={this.state.chart_map} />
 
             {this.state.unusable === true ? (
               <div></div>

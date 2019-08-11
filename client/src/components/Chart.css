@@ -11,6 +11,20 @@
      width:100%;
      background: #fff;
 }
+
+.label {
+	margin-top:2rem;
+}
+
+.text-input {
+	width: 100%;
+	margin-bottom: 1rem;
+}
+
+.form-input {
+	width: 100%;
+}
+
  .horizontalBarChart {
      width:100%;
      margin: 2rem 0;
@@ -56,18 +70,7 @@
      stroke: #AAA;
 }
 
-.label {
-	margin-top:2rem;
-}
 
-.text-input {
-	width: 100%;
-	margin-bottom: 1rem;
-}
-
-.form-input {
-	width: 100%;
-}
 
 .bubbleChart {
   display: -webkit-box;
