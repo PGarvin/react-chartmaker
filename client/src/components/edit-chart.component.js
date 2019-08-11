@@ -139,7 +139,7 @@ export default class EditChart extends Component {
 
     }
   
-  console.log(document.getElementById('chart').innerHTML.split('><').join('>\n<'));
+  //console.log(document.getElementById('chart').innerHTML.split('><').join('>\n<'));
   }
 
   downloadImage = require('./functions.js').downloadImage;
@@ -160,6 +160,8 @@ export default class EditChart extends Component {
 		.then(res => console.log(res.data));
 
 	this.props.history.push('/');	
+	console.log("this.state", this.state);
+	console.log("obj",obj);
   }
 	
 	

@@ -51,6 +51,8 @@ chartRoutes.route('/update/:id').post(function(req, res) {
 			chart.chart_data = req.body.chart_data;
 			chart.chart_datainput = req.body.chart_datainput;
 			chart.chart_largest = req.body.chart_largest;
+			chart.chart_type = req.body.chart_type;
+			chart.chart_map = req.body.chart_map;
 			
 			chart.save().then(chart => {
 				res.json('Chart updated!');
